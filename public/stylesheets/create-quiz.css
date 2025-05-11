@@ -1,0 +1,136 @@
+/* Estilo para el campo del nombre del quiz */
+.quiz-name {
+  margin-bottom: 1.5rem;
+}
+
+.quiz-name label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.quiz-name input[type="text"] {
+  width: 100%;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 5px;
+  background: rgba(35, 21, 21, 0.2);
+  color: #000000;
+  font-size: 1rem;
+}
+
+.quiz-name input[type="text"]::placeholder {
+  color: #000; /* Cambia el color del placeholder a negro */
+}
+
+.quiz-description {
+  margin-bottom: 1.5rem;
+}
+
+.quiz-description label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.quiz-description textarea {
+  width: 100%;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 5px;
+  background: rgba(35, 21, 21, 0.2);
+  color: #000000;
+  font-size: 1rem;
+  resize: none;
+}
+
+.quiz-description textarea::placeholder {
+  color: #000000;
+}
+
+#quizForm {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2rem;
+  border-radius: 10px;
+  max-width: 800px;
+  margin: 2rem auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#quizForm h1 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  color: #ffd700;
+}
+
+question {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.question label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #000000;
+}
+
+.question input[type="text"] {
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  border: none;
+  border-radius: 5px;
+  background: rgba(35, 21, 21, 0.2);
+  color: #000000;
+  font-size: 1rem;
+}
+
+.question input[type="text"]::placeholder {
+  color: #ccc;
+}
+
+#addQuestionButton,
+button[type="submit"] {
+  display: inline-block;
+  padding: 0.8rem 1.5rem;
+  margin-top: 1rem;
+  border: none;
+  border-radius: 30px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+#addQuestionButton {
+  background: #ffa502;
+  color: #fff;
+}
+
+#addQuestionButton:hover {
+  background: #ff9000;
+}
+
+button[type="submit"] {
+  background: #4e54c8;
+  color: #fff;
+}
+
+button[type="submit"]:hover {
+  background: #3b3f46;
+}
+
+#questionsContainer {
+  margin-top: 1rem;
+}
+
+.question:last-child {
+  margin-bottom: 0;
+}
+

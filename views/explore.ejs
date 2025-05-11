@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Explorar Quizzes</title>
+  <link rel="stylesheet" href="/stylesheets/explore.css">
+</head>
+<body>
+  <!-- Importa el header -->
+  <%- include('partials/header') %>
+
+  <h1>Explorar Quizzes</h1>
+  <div class="quiz-container">
+    <% if (quizzes && quizzes.length > 0) { %>
+      <% quizzes.forEach((quiz) => { %>
+        <div class="quiz-card">
+          <h2><%= quiz.nombre %></h2> <!-- Muestra el nombre del quiz -->
+          <p><%= quiz.descripcion %></p> <!-- Muestra la descripción del quiz -->
+          <a href="/quiz/play/<%= quiz._id %>" class="btn-play">Jugar Quiz</a>
+        </div>
+      <% }); %>
+    <% } else { %>
+      <p>No hay quizzes disponibles en este momento.</p>
+    <% } %>
+  </div>
+
+  <!-- Importa el footer -->
+  <%- include('partials/footer') %>
+</body>
+</html>

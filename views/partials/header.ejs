@@ -1,0 +1,36 @@
+
+<!-- Header de la aplicación -->
+<!-- <style> -->
+    <link rel="stylesheet" href="/stylesheets/header.css">  
+
+<header class="header">
+
+    <div class="container header-container">
+        <!-- Logo -->
+        <div class="logo">
+            <a href="/">
+                <h1>Cuestiones Históricas</h1>
+            </a>
+        </div>
+
+        <!-- Navegación -->
+        <nav class="nav">
+            <ul class="nav-list">
+                <li><a href="/">Inicio</a></li>
+                <li><a href="/quiz/create">Crear Quiz</a></li>
+                <li><a href="/quiz/explore">Explorar</a></li>
+            </ul>
+        </nav>
+
+        <!-- Usuario -->
+        <div class="user-info">
+            <% if (session.user) { %>
+                <a href="/users/profile" class="user-link"><%= session.user.username %></a>
+                <a href="/logout" class="btn btn-secondary">Cerrar sesión</a>
+            <% } else { %>
+                <a href="/login" class="btn btn-primary">Iniciar sesión</a>
+                <a href="/register" class="btn btn-secondary">Registrarse</a>
+            <% } %>
+        </div>
+    </div>
+</header>

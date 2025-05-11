@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuestiones Históricas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/header.css">
+</head>
+<body>
+    <!-- Importa el header -->
+    <%- include('partials/header') %>
+
+    <!-- Sección principal: Hero -->
+    <section class="hero">
+        <div class="container hero-container">
+            <h2>Bienvenido a Cuestiones Históricas</h2>
+            <p>Esta web ha sido creada con el propósito de fomentar el aprendizaje de la historia a través de cuestionarios interactivos y educativos. Explora, aprende y disfruta del conocimiento histórico.</p>
+            <a href="/quizzes" class="btn-primary">Empezar a Aprender</a>
+        </div>
+    </section>
+
+    <!-- Sección de características -->
+    <section class="features">
+        <div class="container features-container">
+            <h3>¿Por qué elegir Cuestiones Históricas?</h3>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <h4>📚 Aprendizaje Dinámico</h4>
+                    <p>Descubre cómo los quizzes interactivos hacen que aprender historia sea divertido y emocionante.</p>
+                </div>
+                <div class="feature-item">
+                    <h4>🌍 Temas Diversos</h4>
+                    <p>Desde la antigüedad hasta la historia moderna, cubrimos una amplia gama de temas históricos.</p>
+                </div>
+                <div class="feature-item">
+                    <h4>🎓 Mejora tus Conocimientos</h4>
+                    <p>Mide tu progreso, reta a tus amigos y mejora tus habilidades en cada sesión.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de últimos quizzes -->
+    <section class="latest-quizzes">
+        <div class="container latest-quizzes-container">
+            <h3>Últimos Quizzes Disponibles</h3>
+            <div class="quizzes-grid">
+                <div class="quiz-card">
+                    <h4>Revolución Francesa</h4>
+                    <p>Pon a prueba tus conocimientos sobre los eventos y personajes clave de este periodo histórico.</p>
+                    <a href="/quiz/revolucion-francesa" class="btn-secondary">Jugar Ahora</a>
+                </div>
+                <div class="quiz-card">
+                    <h4>Segunda Guerra Mundial</h4>
+                    <p>Explora los hechos más destacados y los líderes de este conflicto global.</p>
+                    <a href="/quiz/segunda-guerra-mundial" class="btn-secondary">Jugar Ahora</a>
+                </div>
+                <div class="quiz-card">
+                    <h4>El Renacimiento</h4>
+                    <p>Aprende sobre los avances culturales y científicos de esta época dorada.</p>
+                    <a href="/quiz/renacimiento" class="btn-secondary">Jugar Ahora</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de testimonios -->
+    <section class="testimonials">
+        <div class="container testimonials-container">
+            <h3>Lo que dicen nuestros usuarios</h3>
+            <div class="testimonials-grid">
+                <div class="testimonial-item">
+                    <p>“He aprendido más historia aquí que en mis clases de colegio. Es realmente adictivo.”</p>
+                    <span>– María López</span>
+                </div>
+                <div class="testimonial-item">
+                    <p>“Una herramienta increíble para los profesores. Mis estudiantes la aman.”</p>
+                    <span>– Francisco Gómez</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Importa el carrusel -->
+    <%- include('partials/carousel') %>
+
+    <!-- Importa el footer -->
+    <%- include('partials/footer') %>
+</body>
+
+</html>

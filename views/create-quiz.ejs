@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crear Quiz</title>
+  <link rel="stylesheet" href="/stylesheets/create-quiz.css">
+  <script defer src="/js/quizForm.js"></script>
+</head>
+<body>
+  <!-- Importa el header -->
+  <%- include('partials/header') %>
+  <h1>Crear Quiz</h1>
+  <form id="quizForm" action="/quiz/create" method="POST">
+    <!-- Campo para el nombre del quiz -->
+    <div class="quiz-name">
+      <label for="nombre">Nombre del Quiz:</label>
+      <input type="text" id="nombre" name="nombre" placeholder="Escribe el nombre del quiz" required>
+    </div>
+
+        <!-- Campo para la descripción del quiz -->
+        <div class="quiz-description">
+            <label for="descripcion">Descripción del Quiz:</label>
+            <textarea id="descripcion" name="descripcion" placeholder="Escribe una breve descripción del quiz" rows="3" required></textarea>
+          </div>
+
+    <div id="questionsContainer">
+      <!-- Contenedor para las preguntas -->
+      <div class="question">
+        <label for="pregunta">Pregunta:</label>
+        <input type="text" name="preguntas[0][pregunta]" required>
+
+        <label for="respuesta_correcta">Respuesta Correcta:</label>
+        <input type="text" name="preguntas[0][respuesta_correcta]" required>
+
+        <label>Respuestas:</label>
+        <input type="text" name="preguntas[0][respuestas][0][respuesta]" required>
+        <input type="text" name="preguntas[0][respuestas][1][respuesta]" required>
+        <input type="text" name="preguntas[0][respuestas][2][respuesta]" required>
+        <input type="text" name="preguntas[0][respuestas][3][respuesta]" required>
+      </div>
+    </div>
+    <button type="button" id="addQuestionButton">Agregar otra pregunta</button>
+    <button type="submit">Guardar Quiz</button>
+  </form>
+  <!-- Importa el footer -->
+  <%- include('partials/footer') %>
+</body>
+</html>

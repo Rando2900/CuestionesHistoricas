@@ -1,0 +1,104 @@
+/* Estilos generales para el login */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Aseguramos que el header y footer no afecten el layout del login */
+header, footer {
+  width: 100%;
+  position: relative;
+}
+
+/* Centra el contenido del login */
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1; /* Asegura que el formulario ocupe todo el espacio disponible */
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 400px;
+  margin: 20px auto;
+}
+
+h1 {
+  font-size: 2rem;
+  color: #4a4a4a;
+  margin-bottom: 20px;
+}
+
+form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+label {
+  font-size: 1rem;
+  color: #333;
+}
+
+input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+button {
+  padding: 12px;
+  background-color: #4b6cb7; /* Color de fondo del botón */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #3e5b94; /* Color de fondo al pasar el ratón */
+}
+
+h2 {
+  margin-top: 20px;
+  font-size: 1rem;
+  text-align: center;
+}
+
+h2 a {
+  color: #4b6cb7;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+h2 a:hover {
+  text-decoration: underline;
+}
+
+/* Responsividad */
+@media (max-width: 600px) {
+  .login-container {
+    padding: 15px;
+    width: 90%;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  button {
+    font-size: 1rem;
+  }
+}

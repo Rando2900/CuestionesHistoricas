@@ -1,0 +1,103 @@
+<div class="carousel">
+    <div class="carousel-track">
+      <div class="carousel-slide">
+        <img src="/images/image1.jpg" alt="Imagen 1">
+      </div>
+      <div class="carousel-slide">
+        <img src="/images/image2.jpg" alt="Imagen 2">
+      </div>
+      <div class="carousel-slide">
+        <img src="/images/image3.jpg" alt="Imagen 3">
+      </div>
+    </div>
+    <button class="carousel-btn prev" id="prevBtn">&#10094;</button>
+    <button class="carousel-btn next" id="nextBtn">&#10095;</button>
+  </div>
+  
+  
+
+<script>
+const track = document.querySelector('.carousel-track');
+const slides = Array.from(track.children);
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+
+let currentIndex = 0;
+
+function updateCarousel() {
+  track.style.transform = `translateX(-${currentIndex * 100}%)`;
+}
+
+// Botón Anterior
+prevBtn.addEventListener('click', () => {
+  currentIndex = (currentIndex > 0) ? currentIndex - 1 : slides.length - 1;
+  updateCarousel();
+});
+
+// Botón Siguiente
+nextBtn.addEventListener('click', () => {
+  currentIndex = (currentIndex < slides.length - 1) ? currentIndex + 1 : 0;
+  updateCarousel();
+});
+
+</script>
+
+<style>
+/* Carousel Container */
+.carousel {
+  position: relative;
+  max-width: 800px;
+  margin: 2rem auto;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Carousel Track */
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  width: 100%;
+}
+
+/* Carousel Slide */
+.carousel-slide {
+  min-width: 100%; /* Cada slide ocupa el 100% del contenedor */
+  transition: opacity 0.5s;
+}
+
+.carousel-slide img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Carousel Buttons */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  border: none;
+  padding: 0.8rem 1.2rem;
+  cursor: pointer;
+  font-size: 1.5rem;
+  border-radius: 50%;
+  z-index: 10;
+  transition: background 0.3s;
+}
+
+.carousel-btn:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.carousel-btn.prev {
+  left: 10px;
+}
+
+.carousel-btn.next {
+  right: 10px;
+}
+
+</style>

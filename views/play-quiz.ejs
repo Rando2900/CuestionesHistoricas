@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jugar Quiz</title>
+  <link rel="stylesheet" href="/stylesheets/play-quiz.css">
+</head>
+<body>
+  <!-- Importa el header -->
+  <%- include('partials/header') %>
+
+  <h1>Jugar Quiz</h1>
+  <form id="playQuizForm" action="/quiz/submit" method="POST">
+    <!-- Enviar el ID del quiz como un campo oculto -->
+    <input type="hidden" name="quizId" value="<%= quiz._id %>">
+
+    <% if (quiz && quiz.preguntas && quiz.preguntas.length > 0) { %>
+      <% quiz.preguntas.forEach((pregunta, index) => { %>
+        <div class="question">
+          <h2><%= pregunta.pregunta %></h2>
+          <% pregunta.respuestas.forEach((respuesta, respuestaIndex) => { %>
+            <div class="answer">
+              <input 
+                type="radio" 
+                id="pregunta-<%= index %>-respuesta-<%= respuestaIndex %>" 
+                name="respuestas[<%= index %>]" 
+                value="<%= respuesta.respuesta %>" 
+                required>
+              <label for="pregunta-<%= index %>-respuesta-<%= respuestaIndex %>">
+                <%= respuesta.respuesta %>
+              </label>
+            </div>
+          <% }); %>
+        </div>
+      <% }); %>
+    <% } else { %>
+      <p>No hay preguntas disponibles para este quiz.</p>
+    <% } %>
+    <button type="submit">Enviar Respuestas</button>
+  </form>
+
+  <!-- Importa el footer -->
+  <%- include('partials/footer') %>
+</body>
+</html>
+
+<script>
+  router.post('/submit', (req, res) => {
+    res.render('thank-you'); // Renderiza una página de agradecimiento
+  });
+</script>

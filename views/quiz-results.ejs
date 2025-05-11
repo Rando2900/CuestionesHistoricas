@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resultados del Quiz</title>
+  <link rel="stylesheet" href="/stylesheets/quiz-results.css">
+</head>
+<body>
+  <%- include('partials/header') %>
+
+  <h1>Resultados del Quiz: <%= quiz.nombre %></h1>
+
+  <% resultados.forEach((resultado, index) => { %>
+    <div class="question-result">
+      <h2><%= index + 1 %>. <%= resultado.pregunta %></h2>
+      <p><strong>Tu respuesta:</strong> <%= resultado.respuesta_usuario %></p>
+      <p><strong>Respuesta correcta:</strong> <%= resultado.respuesta_correcta %></p>
+      <% if (resultado.esCorrecta) { %>
+        <p class="correct">¡Correcto!</p>
+      <% } else { %>
+        <p class="incorrect">Incorrecto</p>
+      <% } %>
+    </div>
+  <% }); %>
+
+  <a href="/quiz/explore" class="btn">Volver a Explorar</a>
+
+  <%- include('partials/footer') %>
+</body>
+</html>
