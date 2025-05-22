@@ -10,40 +10,73 @@
 <body>
   <!-- Importa el header -->
   <%- include('partials/header') %>
-  <h1>Crear Quiz</h1>
-  <form id="quizForm" action="/quiz/create" method="POST">
-    <!-- Campo para el nombre del quiz -->
-    <div class="quiz-name">
-      <label for="nombre">Nombre del Quiz:</label>
-      <input type="text" id="nombre" name="nombre" placeholder="Escribe el nombre del quiz" required>
-    </div>
+  <div class="quiz-container">
+    <div class="sidebar">
+      <h2>Quiz</h2>
+      <button id="addQuestionButton">Añadir pregunta</button>
+   </div>
+    <div class="main-content">
+      <form id="quizForm" action="/quiz/create" method="POST" enctype="multipart/form-data">
 
-        <!-- Campo para la descripción del quiz -->
-        <div class="quiz-description">
-            <label for="descripcion">Descripción del Quiz:</label>
-            <textarea id="descripcion" name="descripcion" placeholder="Escribe una breve descripción del quiz" rows="3" required></textarea>
+        <!-- Campo para el nombre del quiz -->
+        <div class="quiz-info">
+          <input type="text" name="nombre" placeholder="Nombre del Quiz" required>
+          <textarea name="descripcion" placeholder="Descripción del Quiz" required></textarea>
+          <select name="categoria" class="quiz-category-select" required>
+            <option value="" disabled selected>Selecciona una categoría</option>
+            <option value="Historia">Historia</option>
+            <option value="Ciencia">Ciencia</option>
+            <option value="Arte">Arte</option>
+            <option value="Deportes">Deportes</option>
+            <option value="Geografía">Geografía</option>
+            <option value="Entretenimiento">Entretenimiento</option>
+            <option value="Tecnología">Tecnología</option>
+            <option value="Literatura">Literatura</option>
+            <option value="Música">Música</option>
+            <option value="Cultura General">Cultura General</option>
+          </select>
+        </div>
+
+        <!-- Contenedor para las preguntas -->
+        <div id="questionsContainer">
+          <div class="question">
+            <div class="question-header">
+              <input type="text" name="preguntas[0][pregunta]" placeholder="Escribe tu pregunta aquí" required>
+            </div>
+            <div class="multimedia-container">
+              <label for="multimedia">Busca e inserta los elementos multimedia</label>
+              <input type="file" id="multimedia" name="preguntas[0][multimedia]" accept="image/*,video/*" class="multimedia-input">
+              <label for="multimedia" class="custom-file-label">Seleccionar archivo</label>
+              <span class="file-selected-text">Ningún archivo seleccionado</span>
+              <div class="image-preview-container">
+                <img class="preview-image" style="display: none;">
+                <button type="button" class="remove-image-button" style="display: none;">❌</button>
+              </div>
+            </div>
+            <div class="answers">
+              <div class="answer red">
+                <input type="text" name="preguntas[0][respuestas][0][respuesta]" placeholder="Respuesta 1" required>
+                <input type="radio" name="preguntas[0][respuesta_correcta]" value="0" required>
+              </div>
+              <div class="answer blue">
+                <input type="text" name="preguntas[0][respuestas][1][respuesta]" placeholder="Respuesta 2" required>
+                <input type="radio" name="preguntas[0][respuesta_correcta]" value="1">
+              </div>
+              <div class="answer yellow">
+                <input type="text" name="preguntas[0][respuestas][2][respuesta]" placeholder="Respuesta 3" required>
+                <input type="radio" name="preguntas[0][respuesta_correcta]" value="2">
+              </div>
+              <div class="answer green">
+                <input type="text" name="preguntas[0][respuestas][3][respuesta]" placeholder="Respuesta 4" required>
+                <input type="radio" name="preguntas[0][respuesta_correcta]" value="3">
+              </div>
+            </div>
+            <button type="button" class="delete-question-button">Eliminar pregunta</button>
           </div>
-
-    <div id="questionsContainer">
-      <!-- Contenedor para las preguntas -->
-      <div class="question">
-        <label for="pregunta">Pregunta:</label>
-        <input type="text" name="preguntas[0][pregunta]" required>
-
-        <label for="respuesta_correcta">Respuesta Correcta:</label>
-        <input type="text" name="preguntas[0][respuesta_correcta]" required>
-
-        <label>Respuestas:</label>
-        <input type="text" name="preguntas[0][respuestas][0][respuesta]" required>
-        <input type="text" name="preguntas[0][respuestas][1][respuesta]" required>
-        <input type="text" name="preguntas[0][respuestas][2][respuesta]" required>
-        <input type="text" name="preguntas[0][respuestas][3][respuesta]" required>
-      </div>
+        </div>
+        <button type="submit" class="save-button">Guardar Quiz</button>
+      </form>
     </div>
-    <button type="button" id="addQuestionButton">Agregar otra pregunta</button>
-    <button type="submit">Guardar Quiz</button>
-  </form>
-  <!-- Importa el footer -->
-  <%- include('partials/footer') %>
+  </div>
 </body>
 </html>

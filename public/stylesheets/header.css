@@ -1,100 +1,264 @@
-/* Estilo para el header */
+/* Estilo base para el header */
 .header {
-    background: linear-gradient(to right, #4e54c8, #8f94fb);
-    color: #fff;
-    padding: 1rem 0;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  }
-  
+  background: linear-gradient(to right, #4e54c8, #8f94fb);
+  color: #fff;
+  padding: 1rem 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  width: 100%;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  position: relative;
+}
+
+.logo h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: 1px;
+}
+
+.logo a {
+  text-decoration: none;
+  color: #fff;
+  transition: color 0.3s;
+}
+
+.logo a:hover {
+  color: #ffd700;
+}
+
+/* Navegación principal */
+.nav {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s;
+}
+
+.nav-list {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 1.5rem;
+}
+
+.nav-list li a {
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  color: #fff;
+  transition: color 0.3s, background 0.2s;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+}
+
+.nav-list li a:hover,
+.nav-list li a.active {
+  color: #4e54c8;
+  background: #ffd700;
+}
+
+/* Información del usuario */
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-left: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.user-info p {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 400;
+  color: #4e54c8;
+  background: #fff;
+  padding: 0.3rem 0.9rem;
+  border-radius: 16px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+}
+
+.btn {
+  padding: 0.5rem 1.3rem;
+  border-radius: 20px;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: background 0.3s, transform 0.3s;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  margin-left: 0.3rem;
+}
+
+.btn-primary {
+  background: #ff6f61;
+}
+
+.btn-primary:hover {
+  background: #ff5a4c;
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background: #ffa502;
+}
+
+.btn-secondary:hover {
+  background: #ff9000;
+  transform: translateY(-2px);
+}
+
+/* Menú hamburguesa */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #fff;
+  cursor: pointer;
+  position: absolute;
+  right: 1.2rem;
+  top: 1.2rem;
+  z-index: 10;
+  transition: color 0.2s;
+}
+
+.menu-toggle:focus {
+  outline: 2px solid #ffd700;
+}
+
+/* --- Responsive Header --- */
+@media (max-width: 900px) {
   .header-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1rem;
+    padding: 0 0.7rem;
   }
-  
   .logo h1 {
-    font-size: 1.8rem;
-    font-weight: 600;
-    margin: 0;
+    font-size: 1.3rem;
   }
-  
-  .logo a {
-    text-decoration: none;
-    color: #fff;
-    transition: color 0.3s;
+  .user-info {
+    margin-left: 0;
+    justify-content: flex-end;
   }
-  
-  .logo a:hover {
-    color: #ffd700;
+}
+
+@media (max-width: 800px) {
+  .header-container {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0 0.5rem;
   }
-  
-  /* Navegación */
-  .nav {
-    flex-grow: 1;
+  .logo {
     display: flex;
     justify-content: center;
-  }
-  
-  .nav-list {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    gap: 1.5rem;
-  }
-  
-  .nav-list li a {
-    font-size: 1rem;
-    font-weight: 500;
-    text-decoration: none;
-    color: #fff;
-    transition: color 0.3s;
-  }
-  
-  .nav-list li a:hover {
-    color: #ffd700;
-  }
-  
-  /* Información del usuario */
-  .user-info {
-    display: flex;
     align-items: center;
+    margin-bottom: 0.5rem;
+  }
+  .nav {
+    justify-content: flex-start;
+    width: 100%;
+    order: 3;
+  }
+  .user-info {
+    justify-content: flex-end;
+    width: 100%;
+    margin-bottom: 0.5rem;
+    order: 2;
+  }
+}
+
+/* Menú hamburguesa y navegación móvil */
+@media (max-width: 600px) {
+  .header-container {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0 0.3rem;
+    position: relative;
+  }
+  .logo {
+    flex: none;
+    margin-bottom: 0.5rem;
+    justify-content: center;
+  }
+  .menu-toggle {
+    display: block;
+    position: absolute;
+    right: 1.2rem;
+    top: 1.2rem;
+  }
+  .nav {
+    position: static;
+    width: 100%;
+    background: linear-gradient(to right, #4e54c8, #8f94fb);
+    box-shadow: none;
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem 0.5rem 0 0.5rem;
+    z-index: 1000;
+    transition: all 0.3s;
+  }
+  .nav.open {
+    display: flex;
+  }
+  .nav-list {
+    flex-direction: column;
     gap: 1rem;
+    width: 100%;
   }
-  
-  .user-info p {
+  .nav-list li {
+    width: 100%;
+  }
+  .nav-list li a {
+    width: 100%;
+    display: block;
+    padding: 0.7rem 0.5rem;
+    border-radius: 8px;
+    text-align: left;
+  }
+  .user-info {
+    position: static;
+    width: 100%;
+    background: transparent;
+    box-shadow: none;
+    padding: 1.2rem 0 0.7rem 0; /* Aumenta el padding-top */
     margin: 0;
+    border-radius: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    z-index: 1;
+  }
+  .btn, .btn-primary, .btn-secondary {
+    width: 90%;
+    min-width: 120px;
     font-size: 1rem;
-    font-weight: 400;
-  }
-  
-  .btn {
-    padding: 0.5rem 1rem;
+    margin: 0;
+    padding: 0.7rem 0.7rem;
+    text-align: center;
     border-radius: 20px;
-    font-size: 0.9rem;
-    text-decoration: none;
-    transition: background 0.3s, transform 0.3s;
-    color: #fff;
   }
-  
-  .btn-primary {
-    background: #ff6f61;
+  .user-info p {
+    font-size: 1rem;
+    padding: 0.3rem 0.7rem;
+    width: 90%;
+    text-align: center;
+    background: #fff;
+    color: #4e54c8;
+    border-radius: 16px;
+    margin: 0;
   }
-  
-  .btn-primary:hover {
-    background: #ff5a4c;
-    transform: translateY(-2px);
-  }
-  
-  .btn-secondary {
-    background: #ffa502;
-  }
-  
-  .btn-secondary:hover {
-    background: #ff9000;
-    transform: translateY(-2px);
-  }
-  
+}

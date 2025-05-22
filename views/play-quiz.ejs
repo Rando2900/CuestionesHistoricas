@@ -10,43 +10,60 @@
   <!-- Importa el header -->
   <%- include('partials/header') %>
 
-  <h1>Jugar Quiz</h1>
-  <form id="playQuizForm" action="/quiz/submit" method="POST">
-    <!-- Enviar el ID del quiz como un campo oculto -->
-    <input type="hidden" name="quizId" value="<%= quiz._id %>">
+  <div class="kahoot-container">
+    <!-- Mostrar el nombre y la descripción del quiz -->
+    <h1><%= quiz.nombre %></h1>
+    <p><%= quiz.descripcion %></p>
 
-    <% if (quiz && quiz.preguntas && quiz.preguntas.length > 0) { %>
-      <% quiz.preguntas.forEach((pregunta, index) => { %>
-        <div class="question">
-          <h2><%= pregunta.pregunta %></h2>
-          <% pregunta.respuestas.forEach((respuesta, respuestaIndex) => { %>
-            <div class="answer">
-              <input 
-                type="radio" 
-                id="pregunta-<%= index %>-respuesta-<%= respuestaIndex %>" 
-                name="respuestas[<%= index %>]" 
-                value="<%= respuesta.respuesta %>" 
-                required>
-              <label for="pregunta-<%= index %>-respuesta-<%= respuestaIndex %>">
-                <%= respuesta.respuesta %>
-              </label>
+    <form id="playQuizForm" action="/quiz/submit" method="POST">
+      <!-- Enviar el ID del quiz como un campo oculto -->
+      <input type="hidden" name="quizId" value="<%= quiz._id %>">
+
+      <% if (quiz && quiz.preguntas && quiz.preguntas.length > 0) { %>
+        <% quiz.preguntas.forEach((pregunta, index) => { %>
+          <div class="kahoot-question-block">
+            <h2 class="kahoot-question-title"><%= pregunta.pregunta %></h2>
+            <% if (pregunta.multimedia) { %>
+              <% if (pregunta.multimedia.match(/\.(jpg|jpeg|png|gif)$/i)) { %>
+                <div class="kahoot-image-container">
+                  <img src="<%= pregunta.multimedia %>" alt="Imagen de la pregunta">
+                </div>
+              <% } else if (pregunta.multimedia.match(/\.(mp4|webm|ogg)$/i)) { %>
+                <div class="kahoot-image-container">
+                  <video controls>
+                    <source src="<%= pregunta.multimedia %>">
+                    Tu navegador no soporta el video.
+                  </video>
+                </div>
+              <% } %>
+            <% } %>
+            <div class="kahoot-answers-grid">
+              <% pregunta.respuestas.forEach((respuesta, respuestaIndex) => { 
+                // Iconos y colores tipo Kahoot
+                const kahootIcons = ['▲', '◆', '●', '■'];
+                const kahootColors = ['red', 'blue', 'yellow', 'green'];
+              %>
+                <label class="kahoot-answer kahoot-<%= kahootColors[respuestaIndex] %>">
+                  <input 
+                    type="radio" 
+                    name="respuestas[<%= index %>]" 
+                    value="<%= respuesta.respuesta %>" 
+                    required>
+                  <span class="kahoot-icon"><%= kahootIcons[respuestaIndex] %></span>
+                  <span class="kahoot-answer-text"><%= respuesta.respuesta %></span>
+                </label>
+              <% }); %>
             </div>
-          <% }); %>
-        </div>
-      <% }); %>
-    <% } else { %>
-      <p>No hay preguntas disponibles para este quiz.</p>
-    <% } %>
-    <button type="submit">Enviar Respuestas</button>
-  </form>
+          </div>
+        <% }); %>
+      <% } else { %>
+        <p>No hay preguntas disponibles para este quiz.</p>
+      <% } %>
+      <button type="submit" class="kahoot-submit-btn">Enviar Respuestas</button>
+    </form>
+  </div>
 
   <!-- Importa el footer -->
   <%- include('partials/footer') %>
 </body>
 </html>
-
-<script>
-  router.post('/submit', (req, res) => {
-    res.render('thank-you'); // Renderiza una página de agradecimiento
-  });
-</script>

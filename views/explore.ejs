@@ -5,18 +5,55 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Explorar Quizzes</title>
   <link rel="stylesheet" href="/stylesheets/explore.css">
+  <style>
+    .explore-filters {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      justify-content: center;
+      align-items: center;
+    }
+    .explore-filters input, .explore-filters select {
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      border: 1px solid #bdbdbd;
+      font-size: 1rem;
+    }
+  </style>
 </head>
 <body>
   <!-- Importa el header -->
   <%- include('partials/header') %>
 
   <h1>Explorar Quizzes</h1>
-  <div class="quiz-container">
+
+  <!-- Barra de búsqueda y filtro por categoría -->
+  <div class="explore-filters">
+    <input type="text" id="searchInput" placeholder="Buscar por nombre...">
+    <select id="categoryFilter">
+      <option value="">Todas las categorías</option>
+      <option value="Historia">Historia</option>
+      <option value="Ciencia">Ciencia</option>
+      <option value="Arte">Arte</option>
+      <option value="Deportes">Deportes</option>
+      <option value="Geografía">Geografía</option>
+      <option value="Entretenimiento">Entretenimiento</option>
+      <option value="Tecnología">Tecnología</option>
+      <option value="Literatura">Literatura</option>
+      <option value="Música">Música</option>
+      <option value="Cultura General">Cultura General</option>
+    </select>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
     <% if (quizzes && quizzes.length > 0) { %>
       <% quizzes.forEach((quiz) => { %>
-        <div class="quiz-card">
-          <h2><%= quiz.nombre %></h2> <!-- Muestra el nombre del quiz -->
-          <p><%= quiz.descripcion %></p> <!-- Muestra la descripción del quiz -->
+        <div class="quiz-card" 
+             data-nombre="<%= quiz.nombre.toLowerCase() %>" 
+             data-categoria="<%= quiz.categoria %>">
+          <h2><%= quiz.nombre %></h2>
+          <p><%= quiz.descripcion %></p>
+          <span class="quiz-category"><%= quiz.categoria %></span>
           <a href="/quiz/play/<%= quiz._id %>" class="btn-play">Jugar Quiz</a>
         </div>
       <% }); %>
@@ -24,6 +61,28 @@
       <p>No hay quizzes disponibles en este momento.</p>
     <% } %>
   </div>
+
+  <script>
+    const searchInput = document.getElementById('searchInput');
+    const categoryFilter = document.getElementById('categoryFilter');
+    const quizCards = document.querySelectorAll('.quiz-card');
+
+    function filterQuizzes() {
+      const searchValue = searchInput.value.toLowerCase();
+      const categoryValue = categoryFilter.value;
+
+      quizCards.forEach(card => {
+        const nombre = card.getAttribute('data-nombre');
+        const categoria = card.getAttribute('data-categoria');
+        const matchesName = nombre.includes(searchValue);
+        const matchesCategory = !categoryValue || categoria === categoryValue;
+        card.style.display = (matchesName && matchesCategory) ? '' : 'none';
+      });
+    }
+
+    searchInput.addEventListener('input', filterQuizzes);
+    categoryFilter.addEventListener('change', filterQuizzes);
+  </script>
 
   <!-- Importa el footer -->
   <%- include('partials/footer') %>
