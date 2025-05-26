@@ -7,6 +7,7 @@ const usuarioSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now } // Campo para la fecha de creación
 });
 
-const Usuario = mongoose.model('Usuario', usuarioSchema);
+const 
+Usuario = mongoose.model('Usuario', usuarioSchema);
 
 module.exports = Usuario;

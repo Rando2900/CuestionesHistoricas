@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editar Quiz</title>
+  <link rel="stylesheet" href="/stylesheets/edit-quiz.css">
+  <script defer src="/js/editForm.js"></script>
+</head>
+<body>
+  <%- include('partials/header') %>
+  <div class="quiz-container">
+    <div class="sidebar">
+      <h2>Editar Quiz</h2>
+    </div>
+    <div class="main-content">
+      <form id="quizForm" action="/quiz/edit/<%= quiz._id %>" method="POST" enctype="multipart/form-data">
+        <div class="quiz-info">
+          <input type="text" name="nombre" placeholder="Nombre del Quiz" required value="<%= quiz.nombre %>">
+          <textarea name="descripcion" placeholder="Descripción del Quiz" required><%= quiz.descripcion %></textarea>
+          <select name="categoria" class="quiz-category-select" required>
+            <option value="" disabled>Selecciona una categoría</option>
+            <% 
+              const categorias = [
+                "Historia", "Ciencia", "Arte", "Deportes", "Geografía", "Entretenimiento",
+                "Tecnología", "Literatura", "Música", "Cultura General"
+              ];
+              categorias.forEach(function(cat) { %>
+                <option value="<%= cat %>" <%= quiz.categoria === cat ? 'selected' : '' %>><%= cat %></option>
+            <% }); %>
+          </select>
+        </div>
+        <div id="questionsContainer">
+          <% quiz.preguntas.forEach(function(pregunta, idx) { %>
+            <div class="question" data-index="<%= idx %>">
+              <div class="question-header">
+                <label>Pregunta <%= idx + 1 %></label>
+                <input type="text" name="preguntas[<%= idx %>][pregunta]" required value="<%= pregunta.pregunta %>">
+                <!-- Botón para eliminar pregunta (opcional) -->
+                <button type="button" class="remove-question" title="Eliminar pregunta">&times;</button>
+              </div>
+              <div class="answers">
+                <% pregunta.respuestas.forEach(function(respuesta, rIdx) { %>
+                  <div class="answer">
+                    <input type="text" name="preguntas[<%= idx %>][respuestas][<%= rIdx %>][respuesta]" required value="<%= respuesta.respuesta %>" placeholder="Respuesta <%= rIdx + 1 %>">
+                    <label>
+                      <input type="radio" name="preguntas[<%= idx %>][respuesta_correcta]" value="<%= respuesta.respuesta %>" <%= pregunta.respuesta_correcta === respuesta.respuesta ? 'checked' : '' %> required>
+                      Correcta
+                    </label>
+                  </div>
+                <% }); %>
+              </div>
+              <div class="multimedia-container">
+                <% if (pregunta.multimedia && pregunta.multimedia.match(/\.(jpg|jpeg|png|gif)$/i)) { %>
+                  <div class="current-media">
+                    <span>Actual:</span>
+                    <a href="<%= pregunta.multimedia %>" target="_blank">Ver archivo</a>
+                    <img src="<%= pregunta.multimedia %>" alt="Imagen actual" class="current-img" style="max-width: 200px; display: block; margin-top: 8px;">
+                  </div>
+                <% } else if (pregunta.multimedia && pregunta.multimedia.match(/\.(mp4|webm|ogg)$/i)) { %>
+                  <div class="current-media">
+                    <span>Actual:</span>
+                    <a href="<%= pregunta.multimedia %>" target="_blank">Ver archivo</a>
+                    <video controls style="max-width:200px; display:block; margin-top:8px;">
+                      <source src="<%= pregunta.multimedia %>">
+                      Tu navegador no soporta el video.
+                    </video>
+                  </div>
+                <% } %>
+                <label class="custom-file-label">
+                  Cambiar multimedia
+                  <input type="file" name="preguntas[<%= idx %>][multimedia]" accept="image/*,video/*" class="multimedia-input">
+                </label>
+                <img class="preview-img" style="display:none; max-width: 200px; margin-top: 10px;" />
+              </div>
+            </div>
+          <% }); %>
+        </div>
+        <button type="button" id="addQuestionBtn" class="add-question-btn">Añadir otra pregunta</button>
+        <button type="submit" class="save-button">Guardar Cambios</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

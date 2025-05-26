@@ -5,6 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Perfil de Usuario</title>
   <link rel="stylesheet" href="/stylesheets/profile.css">
+  <style>
+    .profile-filters {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      justify-content: center;
+      align-items: center;
+    }
+    .profile-filters input, .profile-filters select {
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      border: 1px solid #bdbdbd;
+      font-size: 1rem;
+      background: #f3f3f3;
+      color: #4e54c8;
+      transition: border 0.2s;
+    }
+    .profile-filters input:focus, .profile-filters select:focus {
+      border: 1.5px solid #ffd700;
+      outline: none;
+      background: #fffde7;
+    }
+  </style>
 </head>
 <body>
   <%- include('partials/header') %>
@@ -14,6 +37,80 @@
   <p>Fecha de registro: <%= user.createdAt ? new Date(user.createdAt).toDateString() : 'Fecha no disponible' %></p>
 
   <a href="/quiz/explore" class="btn">Explorar Quizzes</a>
+
+  <h2>Quizzes creados por <%= user.username %></h2>
+
+  <!-- Filtros -->
+  <div class="profile-filters">
+    <input type="text" id="searchInput" placeholder="Buscar por nombre...">
+    <select id="categoryFilter">
+      <option value="">Todas las categorías</option>
+      <option value="Historia">Historia</option>
+      <option value="Ciencia">Ciencia</option>
+      <option value="Arte">Arte</option>
+      <option value="Deportes">Deportes</option>
+      <option value="Geografía">Geografía</option>
+      <option value="Entretenimiento">Entretenimiento</option>
+      <option value="Tecnología">Tecnología</option>
+      <option value="Literatura">Literatura</option>
+      <option value="Música">Música</option>
+      <option value="Cultura General">Cultura General</option>
+      <option value="Sin categoría">Sin categoría</option>
+    </select>
+  </div>
+
+  <% if (quizzes && quizzes.length > 0) { %>
+    <div class="quiz-container" id="quizContainer">
+      <% quizzes.forEach(function(quiz) { %>
+        <div class="quiz-card"
+             data-nombre="<%= quiz.nombre ? quiz.nombre.toLowerCase() : '' %>"
+             data-categoria="<%= quiz.categoria || 'Sin categoría' %>">
+          <h3><%= quiz.nombre %></h3>
+          <p><%= quiz.descripcion %></p>
+          <span class="quiz-category category-<%= (quiz.categoria || 'Sin categoría').replace(/\s+/g, '-').toLowerCase() %>">
+            <%= quiz.categoria || 'Sin categoría' %>
+          </span>
+          <a href="/quiz/play/<%= quiz._id %>" class="btn btn-secondary">Jugar Quiz</a>
+          <a href="/quiz/edit/<%= quiz._id %>" class="btn btn-edit">Editar Quiz</a>
+          <form action="/quiz/delete/<%= quiz._id %>" method="POST" class="delete-quiz-form" style="display:inline;">
+            <button type="submit" class="btn btn-delete">Eliminar Quiz</button>
+          </form>
+        </div>
+      <% }); %>
+    </div>
+  <% } else { %>
+    <p>No has creado ningún quiz todavía.</p>
+  <% } %>
+
+  <script>
+    const searchInput = document.getElementById('searchInput');
+    const categoryFilter = document.getElementById('categoryFilter');
+    const quizCards = document.querySelectorAll('.quiz-card');
+
+    function filterQuizzes() {
+      const searchValue = searchInput.value.toLowerCase();
+      const categoryValue = categoryFilter.value;
+      quizCards.forEach(card => {
+        const nombre = card.getAttribute('data-nombre');
+        const categoria = card.getAttribute('data-categoria');
+        const matchesName = nombre.includes(searchValue);
+        const matchesCategory = !categoryValue || categoria === categoryValue;
+        card.style.display = (matchesName && matchesCategory) ? '' : 'none';
+      });
+    }
+
+    searchInput.addEventListener('input', filterQuizzes);
+    categoryFilter.addEventListener('change', filterQuizzes);
+  </script>
+  <script>
+    document.querySelectorAll('.delete-quiz-form').forEach(form => {
+      form.addEventListener('submit', function(e) {
+        if (!confirm('¿Estás seguro de que quieres eliminar este quiz? Esta acción no se puede deshacer.')) {
+          e.preventDefault();
+        }
+      });
+    });
+  </script>
 
   <%- include('partials/footer') %>
 </body>

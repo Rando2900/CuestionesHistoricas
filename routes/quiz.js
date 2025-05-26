@@ -115,4 +115,62 @@ router.post('/submit', async (req, res) => {
   }
 });
 
+// Mostrar formulario de edición
+router.get('/edit/:id', isAuthenticated, async (req, res) => {
+  const quiz = await Quiz.findById(req.params.id);
+  if (!quiz) return res.status(404).send('Quiz no encontrado');
+  // Solo el dueño puede editar
+  if (quiz.userId.toString() !== req.session.user.id) return res.status(403).send('No autorizado');
+  res.render('edit-quiz', { quiz });
+});
+
+// Procesar edición
+router.post('/edit/:id', isAuthenticated, upload.any(), async (req, res) => {
+  try {
+    const quiz = await Quiz.findById(req.params.id);
+    if (!quiz) return res.status(404).send('Quiz no encontrado');
+    if (quiz.userId.toString() !== req.session.user.id) return res.status(403).send('No autorizado');
+
+    // Asigna los campos principales
+    quiz.nombre = req.body.nombre;
+    quiz.descripcion = req.body.descripcion;
+    quiz.categoria = req.body.categoria;
+
+    // Procesa preguntas (puede necesitar adaptación según tu modelo)
+    quiz.preguntas = [];
+    const preguntas = req.body.preguntas;
+    if (preguntas) {
+      // Si solo hay una pregunta, preguntas no es array
+      const preguntasArray = Array.isArray(preguntas) ? preguntas : Object.values(preguntas);
+      preguntasArray.forEach((pregunta, idx) => {
+        // Procesa respuestas
+        let respuestas = pregunta.respuestas;
+        if (respuestas && !Array.isArray(respuestas)) {
+          respuestas = Object.values(respuestas);
+        }
+        quiz.preguntas.push({
+          pregunta: pregunta.pregunta,
+          respuestas: respuestas ? respuestas.map(r => ({ respuesta: r.respuesta })) : [],
+          respuesta_correcta: pregunta.respuesta_correcta,
+          // Si tienes multimedia, deberías procesar aquí el archivo
+        });
+      });
+    }
+
+    await quiz.save();
+    res.redirect('/users/profile');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error al editar el quiz');
+  }
+});
+
+router.post('/delete/:id', isAuthenticated, async (req, res) => {
+  const quiz = await Quiz.findById(req.params.id);
+  if (!quiz) return res.status(404).send('Quiz no encontrado');
+  if (quiz.userId.toString() !== req.session.user.id) return res.status(403).send('No autorizado');
+  await quiz.deleteOne();
+  res.redirect('/users/profile');
+});
+
 module.exports = router;
