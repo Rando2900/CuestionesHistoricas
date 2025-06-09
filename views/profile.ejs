@@ -33,10 +33,6 @@
   <%- include('partials/header') %>
 
   <h1>Perfil de <%= user.username %></h1>
-  <p>Email: <%= user.email %></p>
-  <p>Fecha de registro: <%= user.createdAt ? new Date(user.createdAt).toDateString() : 'Fecha no disponible' %></p>
-
-  <a href="/quiz/explore" class="btn">Explorar Quizzes</a>
 
   <h2>Quizzes creados por <%= user.username %></h2>
 

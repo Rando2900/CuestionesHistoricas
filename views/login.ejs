@@ -10,6 +10,12 @@
   <%- include('partials/header') %>
   <div class="login-container">
     <h1>Iniciar Sesión</h1>
+    <% if (typeof error !== 'undefined' && error) { %>
+      <div class="login-error"><%= error %></div>
+    <% } %>
+    <% if (typeof success !== 'undefined' && success) { %>
+      <div class="login-success"><%= success %></div>
+    <% } %>
     <form action="/login" method="POST">
       <label for="username">Usuario:</label>
       <input type="text" id="username" name="username" required>
@@ -30,8 +36,9 @@
     </form>
   </div>
   <%- include('partials/footer') %>
-
-  <script>
+</body>
+</html>
+<script>
     const express = require('express');
     const router = express.Router();
 
@@ -59,5 +66,4 @@
     });
 
     module.exports = router;
-  </script>
-</body>
+</script>

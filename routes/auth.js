@@ -5,10 +5,12 @@ const bcrypt = require('bcrypt');
 
 // Ruta para mostrar el formulario de login
 router.get('/login', (req, res) => {
-  if (req.session.user) {
-    return res.redirect('/'); // Redirige al inicio si ya está autenticado
-  }
-  res.render('login'); // Renderiza la vista de login
+    const success = req.session.success;
+    delete req.session.success;
+    res.render('login', { 
+        success,
+        error: undefined // <-- Añade esto para que siempre exista la variable
+    });
 });
 
 // Ruta para manejar el inicio de sesión
@@ -64,6 +66,8 @@ router.post('/register', async (req, res) => {
     });
 
     await nuevoUsuario.save();
+    // Después de registrar exitosamente:
+    req.session.success = 'Usuario registrado correctamente. Ahora puedes iniciar sesión.';
     res.redirect('/login');
   } catch (err) {
     console.error(err);

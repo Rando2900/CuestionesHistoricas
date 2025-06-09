@@ -131,28 +131,37 @@ router.post('/edit/:id', isAuthenticated, upload.any(), async (req, res) => {
     if (!quiz) return res.status(404).send('Quiz no encontrado');
     if (quiz.userId.toString() !== req.session.user.id) return res.status(403).send('No autorizado');
 
-    // Asigna los campos principales
     quiz.nombre = req.body.nombre;
     quiz.descripcion = req.body.descripcion;
     quiz.categoria = req.body.categoria;
 
-    // Procesa preguntas (puede necesitar adaptación según tu modelo)
     quiz.preguntas = [];
     const preguntas = req.body.preguntas;
     if (preguntas) {
-      // Si solo hay una pregunta, preguntas no es array
       const preguntasArray = Array.isArray(preguntas) ? preguntas : Object.values(preguntas);
+
       preguntasArray.forEach((pregunta, idx) => {
-        // Procesa respuestas
         let respuestas = pregunta.respuestas;
         if (respuestas && !Array.isArray(respuestas)) {
           respuestas = Object.values(respuestas);
         }
+
+        // Busca el archivo subido para esta pregunta
+        const multimediaFile = req.files.find(
+          file => file.fieldname === `preguntas[${idx}][multimedia]`
+        );
+
+        // Si no se subió archivo nuevo, conserva el anterior
+        let multimedia = pregunta.multimedia || "";
+        if (multimediaFile) {
+          multimedia = `/uploads/${multimediaFile.filename}`;
+        }
+
         quiz.preguntas.push({
           pregunta: pregunta.pregunta,
           respuestas: respuestas ? respuestas.map(r => ({ respuesta: r.respuesta })) : [],
           respuesta_correcta: pregunta.respuesta_correcta,
-          // Si tienes multimedia, deberías procesar aquí el archivo
+          multimedia
         });
       });
     }

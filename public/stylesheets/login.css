@@ -87,6 +87,29 @@ h2 a:hover {
   text-decoration: underline;
 }
 
+/* Estilos para mensajes de error */
+.login-error {
+  color: #fff;
+  background: #e53935;
+  padding: 0.7em 1em;
+  border-radius: 6px;
+  margin-bottom: 1em;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Estilos para mensajes de éxito */
+.login-success {
+  color: #155724;
+  background: #d4edda;
+  padding: 0.7em 1em;
+  border-radius: 6px;
+  margin-bottom: 1em;
+  text-align: center;
+  font-weight: bold;
+  border: 1px solid #c3e6cb;
+}
+
 /* Responsividad */
 @media (max-width: 600px) {
   .login-container {
